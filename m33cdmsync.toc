@@ -1,0 +1,10 @@
+## Title: m33cdmsync
+## Author: m33shoq
+## Interface: 120000
+## SavedVariables: M33CDMSYNCSTRINGS
+## LoadSavedVariablesFirst: 1
+## Version: 1
+## X-Curse-Project-ID: 1470338
+
+
+m33cdmsync.lua
