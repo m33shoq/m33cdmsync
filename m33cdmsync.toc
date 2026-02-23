@@ -1,6 +1,6 @@
 ## Title: m33cdmsync
 ## Author: m33shoq
-## Interface: 120000
+## Interface: 120001
 ## SavedVariables: M33CDMSYNCSTRINGS
 ## LoadSavedVariablesFirst: 1
 ## Version: 1
