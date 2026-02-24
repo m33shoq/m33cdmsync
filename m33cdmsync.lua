@@ -127,6 +127,7 @@ local function restoreLayouts()
 				break
 			end
 			removeLayout(oldLayout.layoutID) -- need to remove old profile with same name first for updating to work and not be confusing
+            print("[M33CDMSync] Removed old layout", layoutName, "width id", oldLayout.layoutID)
 			oldLayout = getLayoutByName(layoutName)
 		end
 
