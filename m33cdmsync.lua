@@ -173,15 +173,18 @@ f:SetScript("OnEvent", function(self, event, ...)
 		return
 	elseif event == "VARIABLES_LOADED" then
 		vl = true
+        self:UnregisterEvent("VARIABLES_LOADED")
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		local isInitialLogin, isReloadingUi = ...
 		if not isInitialLogin and not isReloadingUi then return end
 		pew = true
+        self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	elseif event == "COOLDOWN_VIEWER_DATA_LOADED" then
 		cvdl = true
+        self:UnregisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
 	end
 	if vl and pew and cvdl then
-		C_Timer.After(3, function()
+		C_Timer.After(6, function()
 			restoreLayouts()
 		end)
 	end
