@@ -10,6 +10,12 @@ local addonName, ns = ...
 
 M33CDMSYNCSTRINGS = M33CDMSYNCSTRINGS or {}
 
+local _print = print
+
+local function print(...)
+    _print("|cff80ff80[M33CDMSync]|r", ...)
+end
+
 local function DecodeTable(encoded)
 	local ok, decoded = pcall(C_EncodingUtil.DecodeBase64, encoded);
 	if not ok then return false, "DecodeBase64 failed: " .. decoded; end
@@ -53,30 +59,37 @@ local function restoreLayouts()
 	assert(ok, impTable)
 
     if not impTable.rawencoded then
-        print("[M33CDMSync] No layout data found in the decoded table, aborting import")
+        -- print("No layout data found in the decoded table, aborting import")
         return
     end
 
     if type(impTable.rawencoded) ~= "string" then
-        print("[M33CDMSync] Invalid layout data format, expected a string, aborting import")
+        print("Invalid layout data format, expected a string, aborting import")
         return
     end
 
     if impTable.rawencoded == C_CooldownViewer.GetLayoutData() then
-        print("[M33CDMSync] Layout data is identical to current, skipping import")
+        print("Layout data is identical to current, skipping import")
         return
     end
 
     C_CooldownViewer.SetLayoutData(impTable.rawencoded)
-    print("[M33CDMSync] Layout data reimported")
+    print("Layout data reimported")
 end
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOGOUT")
+f:RegisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
 f:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_LOGOUT" then
 		saveLayouts()
+    elseif event == "COOLDOWN_VIEWER_DATA_LOADED" then
+        if not self.restored then
+            self.restored = true
+            restoreLayouts()
+        else
+            print("Received COOLDOWN_VIEWER_DATA_LOADED event, but layouts have already been restored, skipping")
+        end
     end
 end)
 
-restoreLayouts()
