@@ -84,12 +84,9 @@ f:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_LOGOUT" then
 		saveLayouts()
     elseif event == "COOLDOWN_VIEWER_DATA_LOADED" then
-        if not self.restored then
-            self.restored = true
-            restoreLayouts()
-        else
-            print("Received COOLDOWN_VIEWER_DATA_LOADED event, but layouts have already been restored, skipping")
-        end
+        restoreLayouts()
+        self:UnregisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
     end
 end)
 
+restoreLayouts()
